@@ -1,1 +1,441 @@
 Speakmate
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — SpeakMate: AI English Tutor</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #0EA5E9; --blue-dark: #0284C7; --blue-light: #E0F2FE;
+      --blue-xlight: #F0F9FF; --text: #0F172A; --muted: #475569;
+      --border: #E2E8F0; --white: #ffffff;
+    }
+    body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.75; color: var(--text); background: #F8FAFC; }
+    header { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%); color: white; padding: 60px 24px 48px; text-align: center; }
+    .logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: white; border-radius: 18px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); overflow:hidden; }
+    header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+    header p { font-size: 1rem; opacity: 0.85; max-width: 480px; margin: 0 auto; }
+    .badge-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+    .badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+    .meta-bar { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 24px; text-align: center; font-size: 13px; color: var(--muted); }
+    .meta-bar strong { color: var(--text); }
+    .wrapper { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+    .toc { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; margin-bottom: 40px; }
+    .toc h2 { font-size: 14px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .toc ol { padding-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+    @media (max-width: 520px) { .toc ol { grid-template-columns: 1fr; } }
+    .toc li a { color: var(--blue-dark); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .toc li a:hover { text-decoration: underline; }
+    section { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; margin-bottom: 24px; }
+    @media (max-width: 600px) { section { padding: 24px 20px; } }
+    section h2 { font-size: 1.25rem; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--blue-light); }
+    .sec-icon { width: 38px; height: 38px; background: var(--blue-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    section p { color: var(--muted); margin-bottom: 14px; }
+    section p:last-child { margin-bottom: 0; }
+    section ul, section ol { padding-left: 20px; color: var(--muted); margin-bottom: 14px; }
+    section li { margin-bottom: 8px; }
+    section strong { color: var(--text); font-weight: 600; }
+    .info-box { background: var(--blue-xlight); border: 1px solid var(--blue-light); border-left: 4px solid var(--blue); border-radius: 10px; padding: 16px 20px; margin: 18px 0; color: var(--blue-dark); font-size: 14px; }
+    .info-box strong { color: var(--blue-dark); }
+    .warn-box { background: #FFF7ED; border: 1px solid #FED7AA; border-left: 4px solid #F97316; border-radius: 10px; padding: 16px 20px; margin: 18px 0; color: #7C2D12; font-size: 14px; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 18px 0; }
+    .data-table th { background: var(--blue); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+    .data-table th:first-child { border-radius: 10px 0 0 0; }
+    .data-table th:last-child  { border-radius: 0 10px 0 0; }
+    .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
+    .data-table tr:nth-child(even) td { background: var(--blue-xlight); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; background: var(--blue-light); color: var(--blue-dark); padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .tag.local  { background: #DCFCE7; color: #166534; }
+    .tag.remote { background: #FEF9C3; color: #854D0E; }
+    .perm-list { list-style: none; padding: 0; }
+    .perm-list li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); color: var(--muted); }
+    .perm-list li:last-child { border-bottom: none; }
+    .perm-icon { width: 36px; height: 36px; background: var(--blue-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .perm-name { font-weight: 600; color: var(--text); font-size: 14px; display: block; margin-bottom: 2px; }
+    .perm-why  { font-size: 13px; }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+    .service-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .service-card h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .service-card p  { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
+    .service-card a  { color: var(--blue); font-size: 11px; text-decoration: none; display: inline-block; margin-top: 6px; }
+    .contact-card { background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-xlight) 100%); border: 1px solid #BAE6FD; border-radius: 14px; padding: 28px 32px; text-align: center; margin-top: 8px; }
+    .contact-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .contact-card p  { color: var(--muted); margin-bottom: 12px; font-size: 14px; }
+    .contact-card a  { display: inline-block; background: var(--blue); color: white; padding: 12px 28px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; }
+    .contact-card a:hover { background: var(--blue-dark); }
+    footer { text-align: center; padding: 40px 24px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
+    footer strong { color: var(--text); }
+    a { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <img src="https://play-lh.googleusercontent.com/speakmate" alt="SpeakMate" style="width:64px;height:64px;border-radius:18px;" onerror="this.parentElement.innerHTML='🗣️'"/>
+  </div>
+  <h1>Privacy Policy</h1>
+  <p>SpeakMate — AI English Tutor &amp; Voice Practice Partner</p>
+  <div class="badge-row">
+    <span class="badge">📱 Android App</span>
+    <span class="badge">🔒 GDPR Aware</span>
+    <span class="badge">🚫 No Data Selling</span>
+    <span class="badge">🆓 Free App</span>
+    <span class="badge">✅ Version 1.1.1</span>
+  </div>
+</header>
+
+<div class="meta-bar">
+  <strong>Effective Date:</strong> April 6, 2026 &nbsp;|&nbsp;
+  <strong>Last Updated:</strong> May 31, 2026 &nbsp;|&nbsp;
+  <strong>App Version:</strong> 1.1.1 &nbsp;|&nbsp;
+  <strong>App ID:</strong> com.speakmate.english
+</div>
+
+<div class="wrapper">
+
+  <div class="info-box">
+    <strong>Plain English Summary:</strong> SpeakMate processes your voice and text through secure AI APIs to coach your English. We do <em>not</em> sell your data. We do <em>not</em> permanently store your conversations on our servers. Your conversation history, scores, and progress stay on your device. AI voice is generated via Google Cloud TTS or ElevenLabs depending on the avatar you select.
+  </div>
+
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#information">Information We Collect</a></li>
+      <li><a href="#how-used">How We Use Your Information</a></li>
+      <li><a href="#permissions">App Permissions</a></li>
+      <li><a href="#third-party">Third-Party Services</a></li>
+      <li><a href="#data-storage">Data Storage &amp; Retention</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#children">Children's Privacy</a></li>
+      <li><a href="#your-rights">Your Rights</a></li>
+      <li><a href="#pricing">Pricing &amp; Future Changes</a></li>
+      <li><a href="#changes">Policy Changes</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <section id="information">
+    <h2><div class="sec-icon">📋</div> 1. Information We Collect</h2>
+    <p>We collect only the information required to deliver SpeakMate's coaching and role-play features. Here is a complete breakdown:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Data Type</th><th>What It Is</th><th>Storage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Voice Input</strong></td>
+          <td>Audio recorded when you tap the microphone. Converted to text on-device via Android's Speech Recognition API. <em>Raw audio is never transmitted to our servers.</em></td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>Conversation Text</strong></td>
+          <td>Your typed or transcribed messages and AI responses, stored locally in an encrypted Room database on your device.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>AI Feedback &amp; Scores</strong></td>
+          <td>Grammar, Vocabulary, Fluency, Spelling, and Pronunciation scores generated per message and stored locally for progress tracking.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>Session Records</strong></td>
+          <td>Metadata per practice session: date, duration, topic or mission title, and aggregate scores. Viewable in the Sessions and Progress screens.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>Role-Play Mission Data</strong></td>
+          <td>Which missions you have completed and your XP earned. Stored locally. Completion status is used to unlock subsequent missions.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>User Preferences</strong></td>
+          <td>Settings such as your selected AI avatar/voice, chosen TTS provider (Google or ElevenLabs), notification preferences, and default topic. Stored locally via Android DataStore.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+        <tr>
+          <td><strong>Conversation Context (OpenAI API)</strong></td>
+          <td>A trimmed window of your recent messages (first message + last 2 turns) and the AI coach's system prompt are sent to OpenAI's API to generate contextual responses. This is transient — we do not maintain a permanent server-side copy.</td>
+          <td><span class="tag remote">Sent to OpenAI API</span></td>
+        </tr>
+        <tr>
+          <td><strong>TTS Audio — Google Cloud</strong></td>
+          <td>When a Google-voiced avatar is selected, the AI coach's reply text is sent to Google Cloud Text-to-Speech to generate speech. The resulting audio is streamed back and cached locally on your device for instant replay. It is not stored on our servers.</td>
+          <td><span class="tag remote">Google TTS → Local Cache</span></td>
+        </tr>
+        <tr>
+          <td><strong>TTS Audio — ElevenLabs</strong></td>
+          <td>When an ElevenLabs-voiced avatar is selected, the AI coach's reply text is sent to ElevenLabs to generate speech. Audio is cached locally on your device. It is not stored on our servers.</td>
+          <td><span class="tag remote">ElevenLabs → Local Cache</span></td>
+        </tr>
+        <tr>
+          <td><strong>Crash Reports</strong></td>
+          <td>Anonymous technical crash logs (stack traces, device model, OS version) sent to Firebase Crashlytics to help us fix bugs. No conversation content is included.</td>
+          <td><span class="tag remote">Firebase (Anon.)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Analytics Events</strong></td>
+          <td>Anonymous usage events (e.g., "session started", "mission selected", "topic changed") sent to Firebase Analytics. No personally identifiable information.</td>
+          <td><span class="tag remote">Firebase (Anon.)</span></td>
+        </tr>
+        <tr>
+          <td><strong>XP, Achievements &amp; Streak</strong></td>
+          <td>Gamification data including experience points, level, badges earned, and daily streak count. Stored locally only.</td>
+          <td><span class="tag local">On-Device Only</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>SpeakMate is currently free.</strong> There are no in-app purchases, subscriptions, or premium tiers in this version. We do not collect any payment information.
+    </div>
+    <div class="warn-box">
+      <strong>We do NOT collect:</strong> your real name, email address, phone number, location data, contacts, photos, payment details, biometric data, or any personally identifiable information beyond what is described above.
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="how-used">
+    <h2><div class="sec-icon">🎯</div> 2. How We Use Your Information</h2>
+    <p>Your data is used exclusively to power the SpeakMate experience:</p>
+    <ul>
+      <li><strong>Real-Time AI Coaching:</strong> Your conversation messages are sent to OpenAI (model: gpt-4o-mini) to generate grammar corrections, vocabulary suggestions, fluency tips, pronunciation notes, and scores in real time.</li>
+      <li><strong>Role-Play Missions:</strong> For mission scenarios (e.g., Job Interview, Restaurant Complaint), your messages are sent to OpenAI with a custom role-play system prompt so the AI stays in character as the specified scenario partner (hiring manager, waiter, doctor, etc.).</li>
+      <li><strong>Progress Tracking:</strong> Scores and session records stored on-device power your personal Progress dashboard, skill bars, and weekly streak calendar.</li>
+      <li><strong>AI Voice Responses:</strong> The AI coach's text reply is sent to either Google Cloud Text-to-Speech or ElevenLabs (based on your selected avatar) to synthesise natural-sounding speech. The audio is cached locally for instant replay.</li>
+      <li><strong>Daily &amp; Mission Reminders:</strong> If you enable reminders, we use Android WorkManager to schedule local device notifications — no data leaves your device for this feature. A separate Mission Reminder notification highlights suggested role-play scenarios.</li>
+      <li><strong>Crash &amp; Stability Improvements:</strong> Anonymous crash reports help us identify and fix technical issues.</li>
+      <li><strong>Usage Analytics:</strong> Anonymous event counts help us understand which features and topics are most used so we can improve the app.</li>
+    </ul>
+    <p>We do <strong>not</strong> use your data for advertising, profiling, or any purpose beyond what is listed above.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="permissions">
+    <h2><div class="sec-icon">🔐</div> 3. App Permissions</h2>
+    <p>SpeakMate requests the following Android permissions. Each is strictly necessary:</p>
+    <ul class="perm-list">
+      <li>
+        <div class="perm-icon">🎤</div>
+        <div>
+          <span class="perm-name">RECORD_AUDIO</span>
+          <span class="perm-why">Required for voice-to-text input. You tap the microphone button to start recording. Audio is processed on-device by Android's Speech Recognizer — raw audio is never uploaded to our servers.</span>
+        </div>
+      </li>
+      <li>
+        <div class="perm-icon">🌐</div>
+        <div>
+          <span class="perm-name">INTERNET</span>
+          <span class="perm-why">Required to communicate with the OpenAI coaching API, Google Cloud TTS and/or ElevenLabs voice APIs, and Firebase services for crash reporting and analytics.</span>
+        </div>
+      </li>
+      <li>
+        <div class="perm-icon">📡</div>
+        <div>
+          <span class="perm-name">ACCESS_NETWORK_STATE</span>
+          <span class="perm-why">Allows the app to check connectivity before API calls, so we can display a helpful "No internet connection" error instead of a generic failure.</span>
+        </div>
+      </li>
+      <li>
+        <div class="perm-icon">🔔</div>
+        <div>
+          <span class="perm-name">POST_NOTIFICATIONS</span>
+          <span class="perm-why">Required on Android 13+ to send daily practice reminders and mission reminders. You explicitly opt in via the Settings screen. Notifications can be disabled at any time from your device settings.</span>
+        </div>
+      </li>
+      <li>
+        <div class="perm-icon">📳</div>
+        <div>
+          <span class="perm-name">VIBRATE</span>
+          <span class="perm-why">Used for haptic feedback when the microphone starts recording, providing clear tactile confirmation that listening has begun.</span>
+        </div>
+      </li>
+      <li>
+        <div class="perm-icon">🔄</div>
+        <div>
+          <span class="perm-name">RECEIVE_BOOT_COMPLETED</span>
+          <span class="perm-why">Required to reschedule your daily and mission reminder notifications after your device restarts. Without this, reminders would not survive a reboot.</span>
+        </div>
+      </li>
+    </ul>
+    <div class="info-box">
+      <strong>AD_ID Permission:</strong> The Google Advertising ID permission is explicitly <em>removed</em> in our app manifest (<code>tools:node="remove"</code>). SpeakMate does not use advertising identifiers and does not serve ads.
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="third-party">
+    <h2><div class="sec-icon">🔗</div> 4. Third-Party Services</h2>
+    <p>SpeakMate integrates with the following third-party services. Each processes data under their own privacy policies:</p>
+
+    <div class="service-grid">
+      <div class="service-card">
+        <h4>OpenAI API (gpt-4o-mini)</h4>
+        <p>Powers all AI conversation, real-time grammar/vocabulary/fluency feedback, post-session reviews, and role-play mission scenarios. A trimmed window of your conversation (first message + last 2 turns) is transmitted per request. No audio is ever sent to OpenAI.</p>
+        <a href="https://openai.com/privacy" target="_blank" rel="noopener">openai.com/privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>Google Cloud Text-to-Speech</h4>
+        <p>Used when a Google-voiced avatar is selected. The AI coach's text reply is sent to Google Cloud TTS (Chirp3-HD voices) to generate natural speech, which is cached locally on your device. No conversation history is sent — only the reply text.</p>
+        <a href="https://cloud.google.com/terms/cloud-privacy-notice" target="_blank" rel="noopener">Google Cloud Privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>ElevenLabs TTS</h4>
+        <p>Used when an ElevenLabs-voiced avatar is selected. The AI coach's text reply (with the feedback block stripped) is sent to ElevenLabs to generate speech, cached locally on your device. Your choice of TTS provider is saved in local preferences.</p>
+        <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener">elevenlabs.io/privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>Android Speech Recognition</h4>
+        <p>On-device or Google-powered voice-to-text conversion when you use the microphone. We only receive the resulting text transcript; raw audio stays on-device.</p>
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>Firebase Crashlytics</h4>
+        <p>Anonymous crash reporting. Collects stack traces, device model, Android version. No conversation content or personal data is included. Disabled in debug builds.</p>
+        <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>Firebase Analytics</h4>
+        <p>Anonymous event tracking (feature usage, session counts, topic/mission selections). No personally identifiable information is collected. Used only to improve the app experience.</p>
+        <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy →</a>
+      </div>
+      <div class="service-card">
+        <h4>Firebase Performance</h4>
+        <p>Monitors app responsiveness and network request latency anonymously. Helps us detect and resolve performance bottlenecks. Controlled by the same toggle as Crashlytics.</p>
+        <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy →</a>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:24px;">
+      <strong>Data transfers:</strong> OpenAI, ElevenLabs, and Firebase are based in the United States. Google Cloud TTS uses regional endpoints. When your data is processed by these services, it may be transferred internationally. All transfers are governed by the respective provider's data processing agreements and applicable data protection law.
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="data-storage">
+    <h2><div class="sec-icon">💾</div> 5. Data Storage &amp; Retention</h2>
+
+    <p><strong>On-Device Storage:</strong> Your conversation history, session records, progress scores, mission completion status, XP, achievements, streak data, and user preferences are stored in an encrypted SQLite database (Room) and Android DataStore on your device. This data is not synced to any cloud service operated by us.</p>
+
+    <p><strong>Audio Cache:</strong> TTS-generated audio files (WAV for Google Cloud TTS, MP3 for ElevenLabs) are cached on your device's internal storage in a dedicated cache directory. These files can be cleared at any time via <em>Settings → Clear Voice Cache</em> or via your device's standard app storage management.</p>
+
+    <p><strong>Retention Period:</strong> On-device data is retained until you:</p>
+    <ul>
+      <li>Use the <em>"Reset Progress"</em> option in Settings (clears all XP, sessions, streaks, mission progress, and scores).</li>
+      <li>Uninstall the SpeakMate app from your device.</li>
+      <li>Clear the app's data via Android's App Info settings.</li>
+    </ul>
+
+    <p><strong>OpenAI API (Transient):</strong> Conversation messages sent to OpenAI are used to generate responses and are subject to OpenAI's own data retention and usage policies. We do not store copies of these transmissions on our own servers.</p>
+
+    <p><strong>ElevenLabs TTS (Transient):</strong> The AI reply text sent to ElevenLabs for speech synthesis is subject to ElevenLabs' privacy policy. We do not store copies on our servers.</p>
+
+    <p><strong>Firebase Data:</strong> Anonymous crash and analytics data is retained by Google Firebase for up to 90 days in accordance with Firebase's default retention settings.</p>
+
+    <p><strong>No Server-Side User Database:</strong> SpeakMate does not operate a user account system. There is no server-side database containing your profile, conversation history, or personal information maintained by us.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="security">
+    <h2><div class="sec-icon">🛡️</div> 6. Security</h2>
+    <p>We implement the following security measures to protect your information:</p>
+    <ul>
+      <li><strong>Encrypted Local Storage:</strong> All on-device data is stored in an encrypted Room database protected by Android's built-in encryption.</li>
+      <li><strong>HTTPS Only:</strong> All network communications use TLS/HTTPS encryption. Cleartext traffic is explicitly disabled (<code>android:usesCleartextTraffic="false"</code>) in the app manifest.</li>
+      <li><strong>API Key Security:</strong> Third-party API keys (OpenAI, Google Cloud TTS, ElevenLabs) are injected at build time via BuildConfig and obfuscated via ProGuard/R8 code shrinking in release builds.</li>
+      <li><strong>No Ad Tracking:</strong> The Google Advertising ID permission is explicitly removed from the manifest. SpeakMate does not collect or transmit advertising identifiers.</li>
+      <li><strong>Signed APK:</strong> The app is signed with v1, v2, and v3 APK signing schemes to ensure integrity and prevent tampering.</li>
+      <li><strong>Minimal Data Collection:</strong> We follow the principle of data minimisation — collecting only what is strictly necessary for core features.</li>
+      <li><strong>Local Audio Cache Isolation:</strong> TTS audio files are cached in the app's private internal cache directory, inaccessible to other apps.</li>
+    </ul>
+    <p>While we take reasonable precautions, no method of transmission over the internet or electronic storage is 100% secure. We encourage you to keep your device updated and secured with a screen lock.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="children">
+    <h2><div class="sec-icon">👶</div> 7. Children's Privacy</h2>
+    <p>SpeakMate is designed for users aged <strong>13 years and older</strong>. We do not knowingly collect personal information from children under 13.</p>
+    <p>If you are a parent or guardian and believe your child under 13 has used the app, please contact us immediately using the details in Section 11. We will take prompt steps to delete any information that may have been collected.</p>
+    <p>Users between 13–17 should have a parent or guardian review this Privacy Policy before use.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="your-rights">
+    <h2><div class="sec-icon">⚖️</div> 8. Your Rights</h2>
+    <p>You have meaningful control over your data within SpeakMate:</p>
+    <ul>
+      <li><strong>Access:</strong> All your data (sessions, scores, history, missions) is visible directly inside the app in the Sessions, Progress, and Missions screens.</li>
+      <li><strong>Deletion:</strong> Use <em>Settings → Reset Progress</em> to delete all locally stored data at any time. Uninstalling the app removes all remaining local data including cached audio.</li>
+      <li><strong>Correction:</strong> Session transcripts and feedback are read-only records of AI interactions and cannot be individually edited, but you can delete all sessions via the Reset function.</li>
+      <li><strong>Voice Provider Choice:</strong> You can switch between Google Cloud TTS and ElevenLabs voices at any time in Settings → Avatar Selection. This affects which third-party service processes the AI reply text for speech synthesis.</li>
+      <li><strong>Opt-Out of Analytics:</strong> You can disable Firebase Analytics data collection via Google's device-level settings or by disabling personalised ads in your Google account.</li>
+      <li><strong>Notification Control:</strong> Disable daily practice reminders and mission reminders at any time via <em>Settings → Notifications</em> or your device's notification settings.</li>
+      <li><strong>Microphone Access:</strong> You can revoke microphone permission at any time in <em>Android Settings → Apps → SpeakMate → Permissions</em>. The app will still function in text-only mode.</li>
+    </ul>
+    <div class="info-box">
+      <strong>GDPR / CCPA:</strong> If you are located in the European Economic Area or California, you have additional rights including the right to data portability and the right to lodge a complaint with your local supervisory authority. Contact us to exercise these rights.
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pricing">
+    <h2><div class="sec-icon">💰</div> 9. Pricing &amp; Future Changes</h2>
+    <p><strong>SpeakMate is currently free to download and use.</strong> There are no in-app purchases, subscriptions, or hidden charges in this version of the app.</p>
+    <div class="info-box">
+      <strong>Important Notice:</strong> Features and pricing are subject to change in future versions. A future update may introduce paid features, subscriptions, or a premium tier. Continued use of an updated version will be subject to the pricing model in effect at that time.
+    </div>
+    <ul>
+      <li>SpeakMate being free is a feature of the <strong>current version only</strong> and does not constitute a permanent commitment to provide the service free of charge.</li>
+      <li>Future versions may require payment to access some or all features.</li>
+      <li>If a paid version is released, you will be notified via an in-app notice and/or a Play Store update description before any charges apply.</li>
+      <li>You are never automatically charged — any payment requires your explicit action through Google Play.</li>
+      <li>Choosing not to update to a paid version means you may lose access to new features, but your existing locally stored data remains on your device.</li>
+    </ul>
+    <p>We will always be transparent about any pricing changes before they take effect.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="changes">
+    <h2><div class="sec-icon">📝</div> 10. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices, app features, or legal requirements. When we make significant changes, we will:</p>
+    <ul>
+      <li>Update the "Last Updated" date at the top of this page.</li>
+      <li>Display an in-app notice the next time you open SpeakMate after a material change.</li>
+    </ul>
+    <p>Your continued use of SpeakMate after any changes constitutes your acceptance of the revised policy. We encourage you to review this page periodically.</p>
+  </section>
+
+  <!-- 11 -->
+  <section id="contact">
+    <h2><div class="sec-icon">✉️</div> 11. Contact Us</h2>
+    <p>If you have questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please reach out:</p>
+    <div class="contact-card">
+      <h3>SpeakMate Privacy Team</h3>
+      <p>We aim to respond to all privacy-related enquiries within 5 business days.</p>
+      <a href="mailto:developerashraf13@gmail.com">developerashraf13@gmail.com</a>
+    </div>
+    <p style="margin-top:18px;font-size:14px;color:var(--muted);">
+      <strong>App Package:</strong> com.speakmate.english &nbsp;|&nbsp;
+      <strong>Version:</strong> 1.1.1 &nbsp;|&nbsp;
+      <strong>Platform:</strong> Android (minSdk 26 / Android 8.0+)
+    </p>
+  </section>
+
+</div>
+
+<footer>
+  <strong>SpeakMate — AI English Coach</strong><br/>
+  Privacy Policy · Last Updated May 31, 2026 · Version 1.1.1<br/><br/>
+  <span style="font-size:12px;">This policy accurately reflects the technical implementation of SpeakMate v1.1.1, including the Role-Play Missions feature, dual TTS provider support (Google Cloud TTS + ElevenLabs), and OpenAI gpt-4o-mini integration.</span>
+</footer>
+
+</body>
+</html>
