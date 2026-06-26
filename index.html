@@ -174,7 +174,7 @@ a { color: var(--blue); }
         </tr>
         <tr>
           <td><strong>Advertising ID (AdMob)</strong></td>
-          <td>Google AdMob may collect your device's Advertising ID (GAID) to serve personalised or contextual banner and interstitial ads. Managed entirely by Google's AdMob SDK. You can reset or opt out of personalised ads at any time via your device's Google Settings → Ads.</td>
+          <td>Google AdMob may collect your device's Advertising ID (GAID) to serve personalised or contextual banner and interstitial ads. The <code>AD_ID</code> permission is automatically injected by the AdMob SDK (<code>play-services-ads</code>) via manifest merging at build time — it does not need to be manually declared. Managed entirely by Google's AdMob SDK. You can reset or opt out of personalised ads at any time via your device's Google Settings → Ads.</td>
           <td><span class="tag remote">Google AdMob</span></td>
         </tr>
         <tr>
@@ -226,12 +226,13 @@ a { color: var(--blue); }
     <p>SpeakMate requests the following Android permissions. Each is strictly necessary:</p>
     <ul>
       <li><strong>🎤 RECORD_AUDIO</strong> — Required for voice-to-text input. Audio is processed on-device — raw audio is never uploaded to our servers.</li>
+      <li><strong>🔍 Speech Recognition Query</strong> — SpeakMate declares a <code>&lt;queries&gt;</code> intent for <code>android.speech.RecognitionService</code> so Android 11+ can discover the Google Speech Recognition service. No data is collected by this declaration — it is purely a visibility requirement introduced in Android 11.</li>
       <li><strong>🌐 INTERNET</strong> — Required to communicate with OpenAI, Google Cloud TTS, Google AdMob, Firebase Remote Config, and Firebase services.</li>
       <li><strong>📡 ACCESS_NETWORK_STATE</strong> — Allows the app to check connectivity before API calls and before fetching remote config.</li>
       <li><strong>🔔 POST_NOTIFICATIONS</strong> — Required on Android 13+ to send daily practice and mission reminders. You explicitly opt in via the Settings screen.</li>
       <li><strong>📳 VIBRATE</strong> — Used for haptic feedback when the microphone starts recording.</li>
       <li><strong>🔄 RECEIVE_BOOT_COMPLETED</strong> — Required to reschedule reminder notifications after device restarts. The app also listens for <code>QUICKBOOT_POWERON</code> (used on certain Android devices for fast-boot events) for the same purpose.</li>
-      <li><strong>📢 AD_ID</strong> — Used by Google AdMob to access your device's Advertising ID (GAID) to serve relevant personalised or contextual banner and interstitial ads. You can opt out of ad personalisation at any time via Google Settings → Ads on your device.</li>
+      <li><strong>📢 AD_ID</strong> — Automatically added to the app by the Google AdMob SDK (<code>play-services-ads</code>) via manifest merging. Not manually declared — the SDK injects it at build time. Used to access your device's Advertising ID (GAID) to serve relevant personalised or contextual banner and interstitial ads. You can opt out of ad personalisation at any time via Google Settings → Ads on your device.</li>
     </ul>
   </section>
 
@@ -247,7 +248,7 @@ a { color: var(--blue); }
       </div>
       <div class="service-card">
         <h4>Google AdMob</h4>
-        <p>Displays banner ads (within content areas) and interstitial ads (at natural session transition points) to support SpeakMate's free experience. AdMob may collect your device's Advertising ID (GAID) and general device information to serve personalised or contextual ads. Ad placements comply with Google Play Ad Policy — never interfering with core coaching functionality.</p>
+        <p>Displays banner ads (within content areas) and interstitial ads (at natural session transition points) to support SpeakMate's free experience. AdMob may collect your device's Advertising ID (GAID) and general device information to serve personalised or contextual ads. The <code>AD_ID</code> permission is automatically added by the AdMob SDK via manifest merging. Ad placements comply with Google Play Ad Policy — never interfering with core coaching functionality.</p>
         <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy →</a>
       </div>
       <div class="service-card">
