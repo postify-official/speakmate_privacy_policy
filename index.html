@@ -97,7 +97,7 @@ a { color: var(--blue); }
 <div class="wrapper">
 
   <div class="info-box">
-    <strong>Plain English Summary:</strong> SpeakMate processes your voice and text through secure AI APIs to coach your English. We do not sell your data. We do not permanently store your conversations on our servers. Your conversation history, scores, and progress stay on your device. AI voice is generated via Google Cloud Text-to-Speech. The app is free and supported by Google AdMob banner ads and interstitial ads. AdMob may use your Advertising ID to serve relevant ads. Firebase Remote Config is used to deliver mandatory app updates to ensure you always have a secure, up-to-date experience.
+    <strong>Plain English Summary:</strong> SpeakMate processes your voice and text through secure AI APIs to coach your English. We do not sell your data. We do not permanently store your conversations on our servers. Your conversation history, scores, and progress stay on your device. AI voice is generated via Google Cloud Text-to-Speech. The app is free and supported by Google AdMob banner and interstitial ads. AdMob may use your Advertising ID (GAID) to serve relevant ads — you can opt out at any time via Google Settings → Ads. Firebase Remote Config and the Google Play In-App Updates API are used to deliver mandatory app updates to ensure you always have a secure, up-to-date experience.
   </div>
 
   <div class="toc">
@@ -211,7 +211,7 @@ a { color: var(--blue); }
       <li><strong>Role-Play Missions:</strong> Your messages are sent to OpenAI with a custom role-play system prompt so the AI stays in character as the specified scenario partner.</li>
       <li><strong>Progress Tracking:</strong> Scores and session records stored on-device power your Progress dashboard, skill bars, and weekly streak calendar.</li>
       <li><strong>AI Voice Responses:</strong> The AI coach's text reply is sent to Google Cloud TTS to synthesise natural-sounding speech, cached locally for instant replay.</li>
-      <li><strong>Banner &amp; Interstitial Ads (AdMob):</strong> Google AdMob banner ads and interstitial ads are displayed to support the free experience. Banner ads appear within content areas; interstitial ads are shown at natural transition points (e.g., after a practice session ends, before the review screen). Ad content is determined by Google based on contextual signals and, if personalisation is enabled, your Advertising ID.</li>
+      <li><strong>Banner &amp; Interstitial Ads (AdMob):</strong> Google AdMob banner ads and interstitial ads are displayed to support the free experience. Banner ads appear within content areas; interstitial ads are shown at natural transition points (e.g., after a practice session ends, before the review screen). Ad content is determined by Google based on contextual signals and, if personalisation is enabled, your Advertising ID (GAID).</li>
       <li><strong>Forced / Mandatory App Updates:</strong> Firebase Remote Config is used to check whether the version of the app you are running meets the minimum required version. If your version is below the minimum, you will be shown a mandatory update prompt directing you to the Google Play Store. This ensures all users benefit from the latest security fixes and features.</li>
       <li><strong>Daily &amp; Mission Reminders:</strong> Android WorkManager schedules local device notifications — no data leaves your device for this feature.</li>
       <li><strong>Crash &amp; Stability Improvements:</strong> Anonymous crash reports help us identify and fix technical issues.</li>
@@ -230,8 +230,8 @@ a { color: var(--blue); }
       <li><strong>📡 ACCESS_NETWORK_STATE</strong> — Allows the app to check connectivity before API calls and before fetching remote config.</li>
       <li><strong>🔔 POST_NOTIFICATIONS</strong> — Required on Android 13+ to send daily practice and mission reminders. You explicitly opt in via the Settings screen.</li>
       <li><strong>📳 VIBRATE</strong> — Used for haptic feedback when the microphone starts recording.</li>
-      <li><strong>🔄 RECEIVE_BOOT_COMPLETED</strong> — Required to reschedule reminder notifications after device restarts.</li>
-      <li><strong>📢 AD_ID</strong> — Used by Google AdMob to access your device's Advertising ID to serve relevant banner and interstitial ads. You can opt out of ad personalisation at any time via Google Settings → Ads on your device.</li>
+      <li><strong>🔄 RECEIVE_BOOT_COMPLETED</strong> — Required to reschedule reminder notifications after device restarts. The app also listens for <code>QUICKBOOT_POWERON</code> (used on certain Android devices for fast-boot events) for the same purpose.</li>
+      <li><strong>📢 AD_ID</strong> — Used by Google AdMob to access your device's Advertising ID (GAID) to serve relevant personalised or contextual banner and interstitial ads. You can opt out of ad personalisation at any time via Google Settings → Ads on your device.</li>
     </ul>
   </section>
 
@@ -247,7 +247,7 @@ a { color: var(--blue); }
       </div>
       <div class="service-card">
         <h4>Google AdMob</h4>
-        <p>Displays banner ads (within content areas) and interstitial ads (at natural session transition points) to support SpeakMate's free experience. AdMob may collect your device's Advertising ID (GAID) and general device information. Ad placements comply with Google Play Ad Policy — never interfering with core coaching functionality.</p>
+        <p>Displays banner ads (within content areas) and interstitial ads (at natural session transition points) to support SpeakMate's free experience. AdMob may collect your device's Advertising ID (GAID) and general device information to serve personalised or contextual ads. Ad placements comply with Google Play Ad Policy — never interfering with core coaching functionality.</p>
         <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy →</a>
       </div>
       <div class="service-card">
