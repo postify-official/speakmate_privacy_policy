@@ -91,7 +91,7 @@ a { color: var(--blue); }
 
 <div class="meta-bar">
   <strong>Effective Date:</strong> April 6, 2026 &nbsp;|&nbsp;
-  <strong>Last Updated:</strong> August 31, 2026 &nbsp;|&nbsp;
+  <strong>Last Updated:</strong> September 1, 2026 &nbsp;|&nbsp;
   <strong>App Version:</strong> 1.2.4 &nbsp;|&nbsp;
   <strong>App ID:</strong> com.speakmate.english
 </div>
@@ -136,7 +136,7 @@ a { color: var(--blue); }
       <tbody>
         <tr>
           <td><strong>First Name / Nickname</strong></td>
-          <td>The name you enter during onboarding, used to greet you (e.g. "Hi, Alex 👋") on the Home screen. We do not verify this is your legal or real name — you may enter any name you're comfortable with.</td>
+          <td>The name you enter during onboarding, used to greet you (e.g. "Hi, Alex 👋") on the Home screen. We do not verify this is your legal or real name — you may enter any name you're comfortable with. This step is required to complete onboarding.</td>
           <td><span class="tag new">On-Device + Firestore</span></td>
         </tr>
         <tr>
@@ -286,12 +286,12 @@ a { color: var(--blue); }
       </div>
       <div class="service-card">
         <h4>Google Cloud Firestore</h4>
-        <p><strong>New in 1.2.4.</strong> Stores your first name, chosen level/goal, streak, XP, session and minute totals — keyed to a random anonymous account ID. Also hosts the shared library of Lesson content that every user reads from.</p>
+        <p><strong>New in 1.2.3.</strong> Stores your first name, chosen level/goal, streak, XP, session and minute totals — keyed to a random anonymous account ID. Also hosts the shared library of Lesson content that every user reads from.</p>
         <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy →</a>
       </div>
       <div class="service-card">
         <h4>Firebase Authentication (Anonymous)</h4>
-        <p><strong>New in 1.2.4.</strong> Silently creates a random, anonymous user ID the first time you open the app — no email, phone number, or password is collected. This ID is only used to key your Firestore data.</p>
+        <p><strong>New in 1.2.3.</strong> Silently creates a random, anonymous user ID the first time you open the app — no email, phone number, or password is collected. This ID is only used to key your Firestore data.</p>
         <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy →</a>
       </div>
       <div class="service-card">
@@ -343,7 +343,7 @@ a { color: var(--blue); }
   <!-- ── Section 5 ── -->
   <section id="s5">
     <h2><span class="sec-icon">📚</span> 5. Lessons, Firestore &amp; Your Progress</h2>
-    <p>Version 1.2.4 introduces structured <strong>Lessons</strong> and moves part of your profile and progress from purely on-device storage into <strong>Google Cloud Firestore</strong>. This section explains exactly what changed.</p>
+    <p>Version 1.2.3 introduced structured <strong>Lessons</strong> and moved part of your profile and progress from purely on-device storage into <strong>Google Cloud Firestore</strong>. This section explains exactly what changed.</p>
     <p><strong>How your anonymous account is created:</strong> The first time you complete onboarding, SpeakMate silently signs you in to Firebase Authentication using <em>anonymous sign-in</em> — no email, phone number, or password is ever asked for or collected. This creates a random ID (e.g. <code>a1B2c3D4...</code>) that lives in the app's private storage on your device.</p>
     <p><strong>What's saved under your anonymous account (<code>users/{"{"}your-anonymous-id{"}"}</code>) in Firestore:</strong></p>
     <ul>
@@ -355,7 +355,7 @@ a { color: var(--blue); }
     <p><strong>What is <em>not</em> sent to Firestore:</strong> your raw voice recordings, full chat transcripts, per-message AI feedback/scores, or device advertising identifier — as before. In addition, the <em>detailed</em> record of exactly which lessons and units you've completed and which one you're currently on is tracked entirely on-device in Room, not in Firestore; only the summary counters above (e.g. your total lesson-completed count) are synced.</p>
     <p><strong>Lesson content itself</strong> (the units, prompts, and exercises you complete) lives in a separate, shared part of Firestore that is the same for every user — it is general educational content, not your personal data, and is simply downloaded to your device so lessons load quickly.</p>
     <div class="warn-box">
-      <strong>Important — this is a change from earlier versions:</strong> Prior to 1.2.4, SpeakMate stated that "there is no server-side database containing your profile." That is no longer accurate. The fields listed above are stored on our servers (via Google Cloud Firestore) so that your name, level, goal, and progress can be reliably kept in sync. See Section 6 for retention, and Section 9 for the self-service <strong>Delete Account &amp; Data</strong> option that removes this record entirely.
+      <strong>Important — this was a change introduced in 1.2.3:</strong> Prior to 1.2.3, SpeakMate stated that "there is no server-side database containing your profile." That is no longer accurate as of 1.2.3 onward, including this version. The fields listed above are stored on our servers (via Google Cloud Firestore) so that your name, level, goal, and progress can be reliably kept in sync. See Section 6 for retention, and Section 9 for the self-service <strong>Delete Account &amp; Data</strong> option that removes this record entirely.
     </div>
   </section>
 
@@ -363,7 +363,7 @@ a { color: var(--blue); }
   <section id="s6">
     <h2><span class="sec-icon">💾</span> 6. Data Storage &amp; Retention</h2>
     <p><strong>On-Device Storage:</strong> Your full conversation history, session records, per-message scores, mission completion status, and the detailed record of exactly which lessons/units you've completed are stored in an encrypted SQLite database (Room). Your app settings, onboarding draft, and cached lesson position are stored via Android SharedPreferences, and your avatar selection via Android DataStore. None of this local-only data is synced to Firestore.</p>
-    <p><strong>Cloud Firestore Storage (New):</strong> Your name, selected level/goal, streak, XP, session totals, minute totals, and lesson-completed counter are stored on Google Cloud Firestore servers, keyed to your random anonymous account ID (see Section 5). This lets your summary stats be restored reliably even if local app data is cleared while your anonymous session is still active. The detailed, lesson-by-lesson completion record stays in Room only (see above) and is not part of this Firestore sync.</p>
+    <p><strong>Cloud Firestore Storage:</strong> Your name, selected level/goal, streak, XP, session totals, minute totals, and lesson-completed counter are stored on Google Cloud Firestore servers, keyed to your random anonymous account ID (see Section 5). This lets your summary stats be restored reliably even if local app data is cleared while your anonymous session is still active. The detailed, lesson-by-lesson completion record stays in Room only (see above) and is not part of this Firestore sync.</p>
     <p><strong>Audio Cache:</strong> TTS-generated audio files are cached on your device's internal storage. Clearable at any time via Settings → Clear Voice Cache or via Android's app storage management.</p>
     <p><strong>Retention Period — On-Device Data:</strong> Session records, XP, streaks, and lesson-by-lesson progress are retained until you use <strong>Delete Account &amp; Data</strong> in Settings, or until you uninstall the app. Cached conversation transcripts are managed separately — each new Practice or Lesson session automatically clears the previous one — and, along with cached TTS audio, are fully removed by uninstalling the app or clearing its storage via Android's App Info settings.</p>
     <p><strong>Retention Period — Firestore Data:</strong> Retained on our servers for as long as your anonymous account is active, and afterward for backup/operational purposes, or until you delete your account (Section 9). Because sign-in is anonymous, note the following:</p>
@@ -396,7 +396,7 @@ a { color: var(--blue); }
   <!-- ── Section 8 ── -->
   <section id="s8">
     <h2><span class="sec-icon">👶</span> 8. Children's Privacy</h2>
-    <p>SpeakMate is designed for users aged 13 years and older. We do not knowingly collect personal information from children under 13. The name field during onboarding is optional in spirit — you may enter any name or nickname, real or not.</p>
+    <p>SpeakMate is designed for users aged 13 years and older. We do not knowingly collect personal information from children under 13. The name field during onboarding must be filled in to continue, but is unverified — you may enter any name or nickname, real or not.</p>
     <p><strong>Regarding Ads and Children:</strong> SpeakMate is not directed at children under 13. Google AdMob is configured to serve general audience ads in compliance with applicable laws including COPPA.</p>
     <p>If you are a parent or guardian and believe your child under 13 has used the app, please contact us using the details in Section 13. We will take prompt steps to address any concerns, including deleting any associated Firestore record.</p>
     <p>Users between 13–17 should have a parent or guardian review this Privacy Policy before use.</p>
@@ -494,7 +494,7 @@ a { color: var(--blue); }
   <p><strong>App Package:</strong> com.speakmate.english &nbsp;|&nbsp; <strong>Version:</strong> 1.2.4 &nbsp;|&nbsp; <strong>Platform:</strong> Android (minSdk 26 / Android 8.0+)</p>
   <br>
   <p><strong>SpeakMate: AI English Speaking</strong></p>
-  <p>Privacy Policy · Last Updated August 31, 2026 · Version 1.2.4</p>
+  <p>Privacy Policy · Last Updated September 1, 2026 · Version 1.2.4</p>
   <br>
   <p>This policy accurately reflects the technical implementation of SpeakMate v1.2.4, including the Lessons feature, Cloud Firestore profile &amp; progress sync, anonymous Firebase Authentication, Google Cloud TTS, OpenAI gpt-4o-mini integration, Google AdMob banner, interstitial &amp; rewarded ads, and Cloud Firestore–based forced-update support.</p>
 </footer>
