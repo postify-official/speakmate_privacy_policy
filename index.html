@@ -85,25 +85,25 @@ a { color: var(--blue); }
     <span class="badge">☁️ Cloud Sync (Firestore)</span>
     <span class="badge">🗑️ Self-Service Account Deletion</span>
     <span class="badge">📢 Ad-Supported (Banner, Interstitial &amp; Rewarded)</span>
-    <span class="badge">✅ Version 1.2.4</span>
+    <span class="badge">✅ Version 1.2.5</span>
   </div>
 </header>
 
 <div class="meta-bar">
   <strong>Effective Date:</strong> April 6, 2026 &nbsp;|&nbsp;
-  <strong>Last Updated:</strong> September 1, 2026 &nbsp;|&nbsp;
-  <strong>App Version:</strong> 1.2.4 &nbsp;|&nbsp;
+  <strong>Last Updated:</strong> September 7, 2026 &nbsp;|&nbsp;
+  <strong>App Version:</strong> 1.2.5 &nbsp;|&nbsp;
   <strong>App ID:</strong> com.speakmate.english
 </div>
 
 <div class="wrapper">
 
   <div class="warn-box">
-    <strong>What's new in this version:</strong> SpeakMate now includes a structured <strong>Lessons</strong> feature, asks for your first name during onboarding to personalise your experience, and syncs your name, learning progress, streak and XP to <strong>Cloud Firestore</strong> so they are tied to your in-app profile. This version also introduces <strong>rewarded ads</strong>: a time-based "watch ad to continue" gate in Practice mode (roughly every 2 minutes of conversation) and a similar gate before the first Speaking activity of a Lesson. You can now also permanently <strong>delete your account and all associated data</strong> directly from Settings — this is the only in-app data-reset control; there is no separate "Reset Progress" option. Previous versions kept your profile information only on your device — this version stores a subset of it on our servers as well. See Sections 1, 5, 9 and 10 for full details.
+    <strong>What's new in this version:</strong> SpeakMate now includes a structured <strong>Lessons</strong> feature, asks for your first name during onboarding to personalise your experience, and syncs your name, learning progress, streak and XP to <strong>Cloud Firestore</strong> so they are tied to your in-app profile. This version also introduces <strong>rewarded ads</strong>: a time-based "watch ad to continue" gate in Practice mode (roughly every 2 minutes of conversation) and a similar gate before the first Speaking activity of a Lesson. You can now also permanently <strong>delete your account and all associated data</strong> directly from Settings — this is the only in-app data-reset control; there is no separate "Reset Progress" option. Previous versions kept your profile information only on your device — this version stores a subset of it on our servers as well. <strong>Also new:</strong> requests to our AI providers (OpenAI and Google Cloud Text-to-Speech) are now routed through a secure relay running on Cloudflare Workers, rather than being sent directly from the app — see Section 4 for details. This is an infrastructure and security improvement; it does not change what data is collected or why. See Sections 1, 4, 5, 9 and 10 for full details.
   </div>
 
   <div class="info-box">
-    <strong>Plain English Summary:</strong> SpeakMate processes your voice and text through secure AI APIs to coach your English. We do not sell your data. Your full conversation history, voice cache, and detailed message-level scores stay on your device. Your first name, chosen learning level/goal, and summary progress (streak, XP, sessions) are now also stored in Google Cloud Firestore under a random, anonymous account identifier — never linked to your real identity, email, or phone number — so your progress can be reliably restored. AI voice is generated via Google Cloud Text-to-Speech. The app is free and supported by Google AdMob banner, interstitial, and rewarded ads. AdMob may use your Advertising ID (GAID) to serve relevant personalised ads — you can opt out at any time via Google Settings → Ads on your device. A shared Cloud Firestore config document and the Google Play In-App Updates API are used to deliver mandatory app updates.
+    <strong>Plain English Summary:</strong> SpeakMate processes your voice and text through secure AI APIs — routed via a Cloudflare Workers relay that we control — to coach your English. We do not sell your data. Your full conversation history, voice cache, and detailed message-level scores stay on your device. Your first name, chosen learning level/goal, and summary progress (streak, XP, sessions) are now also stored in Google Cloud Firestore under a random, anonymous account identifier — never linked to your real identity, email, or phone number — so your progress can be reliably restored. AI voice is generated via Google Cloud Text-to-Speech. The app is free and supported by Google AdMob banner, interstitial, and rewarded ads. AdMob may use your Advertising ID (GAID) to serve relevant personalised ads — you can opt out at any time via Google Settings → Ads. A shared Cloud Firestore config document and the Google Play In-App Updates API are used to deliver mandatory app updates.
   </div>
 
   <div class="toc">
@@ -196,13 +196,13 @@ a { color: var(--blue); }
         </tr>
         <tr>
           <td><strong>Conversation Context (OpenAI API)</strong></td>
-          <td>A trimmed window of your recent messages (first message + last 2 turns) and the AI coach's system prompt are sent to OpenAI's API to generate contextual responses. Transient — we do not maintain a permanent server-side copy.</td>
-          <td><span class="tag remote">Sent to OpenAI API</span></td>
+          <td>A trimmed window of your recent messages (first message + last 2 turns) and the AI coach's system prompt are sent through our Cloudflare Workers relay to OpenAI's API to generate contextual responses. The relay forwards this content and attaches our API credential server-side; it does not store or independently use the content. Transient — we do not maintain a permanent server-side copy.</td>
+          <td><span class="tag remote">Sent via Cloudflare Relay → OpenAI API</span></td>
         </tr>
         <tr>
           <td><strong>TTS Audio — Google Cloud</strong></td>
-          <td>The AI coach's reply text is sent to Google Cloud Text-to-Speech to generate natural-sounding speech. The audio is streamed back and cached locally. Not stored on our servers.</td>
-          <td><span class="tag remote">Google TTS → Local Cache</span></td>
+          <td>The AI coach's reply text is sent through our Cloudflare Workers relay to Google Cloud Text-to-Speech to generate natural-sounding speech. The relay forwards the text and attaches our API credential server-side; it does not store the text or the resulting audio. The audio is streamed back and cached locally. Not stored on our servers.</td>
+          <td><span class="tag remote">Cloudflare Relay → Google TTS → Local Cache</span></td>
         </tr>
         <tr>
           <td><strong>Advertising ID (AdMob)</strong></td>
@@ -243,11 +243,11 @@ a { color: var(--blue); }
     <p>Your data is used exclusively to power the SpeakMate experience:</p>
     <ul>
       <li><strong>Personalised Greeting:</strong> The name you enter during onboarding is used to greet you by name on the Home screen and in relevant places throughout the app.</li>
-      <li><strong>Real-Time AI Coaching:</strong> Your conversation messages are sent to OpenAI (gpt-4o-mini) to generate grammar corrections, vocabulary suggestions, fluency tips, pronunciation notes, and scores in real time.</li>
+      <li><strong>Real-Time AI Coaching:</strong> Your conversation messages are sent, via our Cloudflare Workers relay, to OpenAI (gpt-4o-mini) to generate grammar corrections, vocabulary suggestions, fluency tips, pronunciation notes, and scores in real time.</li>
       <li><strong>Lessons &amp; Learning Path:</strong> Structured lesson content grouped by level and goal is fetched from Cloud Firestore. Your position in the path — current unit/lesson, completed lessons, streak, and XP — is read from and written to Firestore so your progress unlocks the right content and is not lost if you reinstall on the same account session.</li>
-      <li><strong>Role-Play Missions:</strong> Your messages are sent to OpenAI with a custom role-play system prompt so the AI stays in character as the specified scenario partner.</li>
+      <li><strong>Role-Play Missions:</strong> Your messages are sent, via our Cloudflare Workers relay, to OpenAI with a custom role-play system prompt so the AI stays in character as the specified scenario partner.</li>
       <li><strong>Progress Tracking:</strong> Scores and session records stored on-device power your Progress dashboard, skill bars, and weekly streak calendar; summary totals (streak, XP, sessions, minutes) are mirrored to Firestore.</li>
-      <li><strong>AI Voice Responses:</strong> The AI coach's text reply is sent to Google Cloud TTS to synthesise natural-sounding speech, cached locally for instant replay.</li>
+      <li><strong>AI Voice Responses:</strong> The AI coach's text reply is sent, via our Cloudflare Workers relay, to Google Cloud TTS to synthesise natural-sounding speech, cached locally for instant replay.</li>
       <li><strong>Banner &amp; Interstitial Ads (AdMob):</strong> Google AdMob banner ads and interstitial ads are displayed to support the free experience. Ad content is determined by Google based on contextual signals and, where personalisation is enabled, your Advertising ID (GAID).</li>
       <li><strong>Rewarded Ads (AdMob):</strong> In Practice mode, roughly every 2 minutes of active back-and-forth conversation, the mic locks after the AI finishes speaking and switches to "Watch Ad to Continue" — never mid-recording, only between turns. In Lessons, a similar gate appears before the first Speaking activity of a lesson, with an explicit "Not Now" option. In both cases, watching (or briefly viewing and closing) the ad unlocks the mic again; this exists because continuing to converse with the AI coach costs us real, per-use fees (OpenAI and Google Cloud TTS) on your behalf. If a rewarded ad fails to load or show in Practice mode, the mic does <em>not</em> unlock for free — it stays gated while the app quietly retries loading another ad in the background, and your only way to end the wait is to tap "End Session." If a mission is in progress when the gate appears, its countdown timer is paused for the duration of the gate so you don't lose mission time waiting on an ad. No in-app currency or bonus XP is granted for watching.</li>
       <li><strong>Forced / Mandatory App Updates:</strong> The app reads a shared, non-personal Cloud Firestore config document to check whether your installed version meets the minimum required version. If not, you'll see a mandatory update prompt via the Google Play In-App Updates API or the Play Store.</li>
@@ -261,11 +261,11 @@ a { color: var(--blue); }
   <!-- ── Section 3 ── -->
   <section id="s3">
     <h2><span class="sec-icon">🔐</span> 3. App Permissions</h2>
-    <p>SpeakMate requests the following Android permissions. Each is strictly necessary. Adding Lessons and Firestore sync did not require any new permission beyond the existing <code>INTERNET</code> permission:</p>
+    <p>SpeakMate requests the following Android permissions. Each is strictly necessary. Adding Lessons, Firestore sync, and the Cloudflare Workers relay did not require any new permission beyond the existing <code>INTERNET</code> permission:</p>
     <ul>
       <li><strong>🎤 RECORD_AUDIO</strong> — Required for voice-to-text input. Audio is processed on-device — raw audio is never uploaded to our servers.</li>
       <li><strong>🔍 Speech Recognition Query</strong> — SpeakMate declares a <code>&lt;queries&gt;</code> intent for <code>android.speech.RecognitionService</code> so Android 11+ can discover the Google Speech Recognition service. No data is collected by this declaration.</li>
-      <li><strong>🌐 INTERNET</strong> — Required to communicate with OpenAI, Google Cloud TTS, Google AdMob, Cloud Firestore (profile sync, Lessons content, and app-update config), and other Firebase services.</li>
+      <li><strong>🌐 INTERNET</strong> — Required to communicate with our Cloudflare Workers relay (which in turn communicates with OpenAI and Google Cloud TTS), Google AdMob, Cloud Firestore (profile sync, Lessons content, and app-update config), and other Firebase services.</li>
       <li><strong>📡 ACCESS_NETWORK_STATE</strong> — Allows the app to check connectivity before API calls and before fetching the update-config document or lesson content.</li>
       <li><strong>🔔 POST_NOTIFICATIONS</strong> — Required on Android 13+ to send daily practice and mission reminders. You explicitly opt in via the Settings screen.</li>
       <li><strong>📳 VIBRATE</strong> — Used for haptic feedback when the microphone starts recording.</li>
@@ -280,8 +280,13 @@ a { color: var(--blue); }
     <p>SpeakMate integrates with the following third-party services. Each processes data under their own privacy policies:</p>
     <div class="service-grid">
       <div class="service-card">
+        <h4>Cloudflare Workers (Secure Relay)</h4>
+        <p><strong>New.</strong> Your app never contacts OpenAI or Google Cloud TTS directly. Instead, requests are sent to a small relay service we operate on Cloudflare Workers, which attaches our API credentials server-side and forwards the request. Cloudflare processes this data only to relay it in transit and does not store it or use it for its own purposes.</p>
+        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy →</a>
+      </div>
+      <div class="service-card">
         <h4>OpenAI API (gpt-4o-mini)</h4>
-        <p>Powers all AI conversation, real-time feedback, post-session reviews, and role-play missions. A trimmed window of your conversation (first message + last 2 turns) is transmitted per request. No audio is ever sent to OpenAI.</p>
+        <p>Powers all AI conversation, real-time feedback, post-session reviews, and role-play missions. A trimmed window of your conversation (first message + last 2 turns) is transmitted per request, via our Cloudflare Workers relay. No audio is ever sent to OpenAI.</p>
         <a href="https://openai.com/privacy" target="_blank" rel="noopener">openai.com/privacy →</a>
       </div>
       <div class="service-card">
@@ -301,7 +306,7 @@ a { color: var(--blue); }
       </div>
       <div class="service-card">
         <h4>Google Cloud Text-to-Speech</h4>
-        <p>The AI coach's reply text is sent to Google Cloud TTS (Chirp3-HD voices) to generate natural-sounding speech, cached locally. No conversation history is sent — only the reply text.</p>
+        <p>The AI coach's reply text is sent, via our Cloudflare Workers relay, to Google Cloud TTS (Chirp3-HD voices) to generate natural-sounding speech, cached locally. No conversation history is sent — only the reply text.</p>
         <a href="https://cloud.google.com/terms/cloud-privacy-notice" target="_blank" rel="noopener">Google Cloud Privacy →</a>
       </div>
       <div class="service-card">
@@ -336,7 +341,7 @@ a { color: var(--blue); }
       </div>
     </div>
     <div class="info-box" style="margin-top:24px;">
-      <strong>Data transfers:</strong> OpenAI, Firebase (including Firestore and Authentication), and Google AdMob are based in the United States. Google Cloud TTS uses regional endpoints. When your data is processed by these services, it may be transferred internationally under their respective data processing agreements.
+      <strong>Data transfers:</strong> OpenAI, Firebase (including Firestore and Authentication), Google AdMob, and Cloudflare are global service providers that may process data in the United States and other countries. Google Cloud TTS uses regional endpoints. When your data is processed by these services, it may be transferred internationally under their respective data processing agreements.
     </div>
   </section>
 
@@ -352,7 +357,7 @@ a { color: var(--blue); }
       <li>Your streak count, total XP, total completed sessions, total minutes practiced, and lesson-completed counter.</li>
       <li>The date you completed onboarding.</li>
     </ul>
-    <p><strong>What is <em>not</em> sent to Firestore:</strong> your raw voice recordings, full chat transcripts, per-message AI feedback/scores, or device advertising identifier — as before. In addition, the <em>detailed</em> record of exactly which lessons and units you've completed and which one you're currently on is tracked entirely on-device in Room, not in Firestore; only the summary counters above (e.g. your total lesson-completed count) are synced.</p>
+    <p><strong>What is <em>not</em> sent to Firestore:</strong> your raw voice recordings, full chat transcripts, per-message AI feedback/scores, or device advertising identifier — as before. In addition, the <em>detailed</em> record of exactly which lessons and units you've completed and which one you're currently on is tracked entirely on-device in Room, not in Firestore; only the summary counters above (e.g. your total lesson-completed count) are synced. Note that your OpenAI/TTS API credentials are not something you hold or transmit at all — those are held solely server-side in our Cloudflare Workers relay (see Section 4 and Section 7).</p>
     <p><strong>Lesson content itself</strong> (the units, prompts, and exercises you complete) lives in a separate, shared part of Firestore that is the same for every user — it is general educational content, not your personal data, and is simply downloaded to your device so lessons load quickly.</p>
     <div class="warn-box">
       <strong>Important — this was a change introduced in 1.2.3:</strong> Prior to 1.2.3, SpeakMate stated that "there is no server-side database containing your profile." That is no longer accurate as of 1.2.3 onward, including this version. The fields listed above are stored on our servers (via Google Cloud Firestore) so that your name, level, goal, and progress can be reliably kept in sync. See Section 6 for retention, and Section 9 for the self-service <strong>Delete Account &amp; Data</strong> option that removes this record entirely.
@@ -371,7 +376,7 @@ a { color: var(--blue); }
       <li>Using <strong>Delete Account &amp; Data</strong> in Settings (see Section 9) deletes your name, streak, XP, sessions, minutes, lesson-completed counter, and every other Firestore field tied to your account, then deletes the underlying anonymous Firebase account itself — plus wipes your on-device Room database (so the detailed lesson-by-lesson record goes too) — this is the complete, self-service way to remove your data everywhere.</li>
       <li><strong>Uninstalling the app without first deleting your account</strong> removes your local anonymous session and your Room database (including detailed lesson progress) only. A fresh install creates a brand-new anonymous ID and a new, empty profile — your previous Firestore record is not automatically deleted and may persist on our servers unless you delete your account first (Section 9) or it is removed under our retention schedule.</li>
     </ul>
-    <p><strong>OpenAI API (Transient):</strong> Messages sent to OpenAI are subject to OpenAI's own data retention policies. We do not store copies on our servers.</p>
+    <p><strong>OpenAI API &amp; Google Cloud TTS (Transient, via Cloudflare Relay):</strong> Messages and reply text passed through our Cloudflare Workers relay to OpenAI and Google Cloud TTS are subject to those providers' own data retention policies. The relay itself does not log, store, or retain the content of these requests — it exists solely to attach our API credentials server-side and forward the request. We do not store copies of this content on our own servers.</p>
     <p><strong>App Update Config (Transient):</strong> No personal data is retained — the config document is a single shared value (minimum version number), not tied to any user or device.</p>
     <p><strong>AdMob Data:</strong> Data collected by Google AdMob is retained and managed by Google in accordance with Google's Privacy Policy.</p>
     <p><strong>Firebase Crash/Analytics Data:</strong> Anonymous crash and analytics data is retained by Google Firebase for up to 90 days.</p>
@@ -383,8 +388,8 @@ a { color: var(--blue); }
     <ul>
       <li><strong>Encrypted Local Storage:</strong> All on-device data is stored in an encrypted Room database protected by Android's built-in encryption.</li>
       <li><strong>Firestore Access Control:</strong> Cloud Firestore security rules restrict every user document so that only the matching authenticated anonymous account can read or write it — your data is never readable by another user's session.</li>
-      <li><strong>HTTPS Only:</strong> All network communications, including Firestore, use TLS/HTTPS. Cleartext traffic is explicitly disabled in the app manifest.</li>
-      <li><strong>API Key Security:</strong> Third-party API keys are injected at build time via BuildConfig and obfuscated via ProGuard/R8 in release builds.</li>
+      <li><strong>HTTPS Only:</strong> All network communications, including Firestore and our Cloudflare Workers relay, use TLS/HTTPS. Cleartext traffic is explicitly disabled in the app manifest.</li>
+      <li><strong>API Key Security:</strong> Our OpenAI and Google Cloud TTS credentials are held exclusively server-side, in our Cloudflare Workers relay, and are never included in, downloaded to, or stored by the app itself. The app only ever communicates with our relay endpoints, which alone hold the credentials needed to call these third-party AI services.</li>
       <li><strong>Signed APK:</strong> The app is signed with v1, v2, and v3 APK signing schemes to ensure integrity.</li>
       <li><strong>Forced Updates:</strong> A shared Cloud Firestore config document enforces a minimum app version, always read fresh from the server (never from a stale local cache) so an outdated cached value can't be used to dodge a mandatory update.</li>
       <li><strong>Minimal Data Collection:</strong> We follow the principle of data minimisation — collecting only what is strictly necessary, and keeping the most sensitive data (raw audio, full transcripts) on-device only.</li>
@@ -431,7 +436,7 @@ a { color: var(--blue); }
     </div>
     <ul>
       <li>The app is completely free — all coaching, Lessons, missions, progress tracking, and features are available at no cost.</li>
-      <li>Ad revenue helps cover API and cloud costs (OpenAI, Google Cloud TTS, Firestore) and supports continued development.</li>
+      <li>Ad revenue helps cover API and cloud costs (OpenAI, Google Cloud TTS, Firestore, Cloudflare) and supports continued development.</li>
       <li>You can opt out of personalised ads at any time via Google Settings → Ads on your device. Non-personalised contextual ads will still be shown if you opt out.</li>
       <li>There are no in-app purchases or subscriptions in this version.</li>
     </ul>
@@ -491,12 +496,12 @@ a { color: var(--blue); }
 </div>
 
 <footer>
-  <p><strong>App Package:</strong> com.speakmate.english &nbsp;|&nbsp; <strong>Version:</strong> 1.2.4 &nbsp;|&nbsp; <strong>Platform:</strong> Android (minSdk 26 / Android 8.0+)</p>
+  <p><strong>App Package:</strong> com.speakmate.english &nbsp;|&nbsp; <strong>Version:</strong> 1.2.5 &nbsp;|&nbsp; <strong>Platform:</strong> Android (minSdk 26 / Android 8.0+)</p>
   <br>
   <p><strong>SpeakMate: AI English Speaking</strong></p>
-  <p>Privacy Policy · Last Updated September 1, 2026 · Version 1.2.4</p>
+  <p>Privacy Policy · Last Updated September 7, 2026 · Version 1.2.5</p>
   <br>
-  <p>This policy accurately reflects the technical implementation of SpeakMate v1.2.4, including the Lessons feature, Cloud Firestore profile &amp; progress sync, anonymous Firebase Authentication, Google Cloud TTS, OpenAI gpt-4o-mini integration, Google AdMob banner, interstitial &amp; rewarded ads, and Cloud Firestore–based forced-update support.</p>
+  <p>This policy accurately reflects the technical implementation of SpeakMate v1.2.5, including the Lessons feature, Cloud Firestore profile &amp; progress sync, anonymous Firebase Authentication, a Cloudflare Workers relay for secure server-side handling of AI API credentials, Google Cloud TTS, OpenAI gpt-4o-mini integration, Google AdMob banner, interstitial &amp; rewarded ads, and Cloud Firestore–based forced-update support.</p>
 </footer>
 
 </body>
